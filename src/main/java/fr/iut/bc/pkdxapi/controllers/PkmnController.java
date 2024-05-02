@@ -27,12 +27,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/pkmn")
 public class PkmnController {
     PkmnService pkmnService;
-
+    
     public PkmnController(PkmnService pkmnService) {
         this.pkmnService = pkmnService;
     }
-
-
+    
+    
+  
     @GetMapping("")
     public PkmnData getByIdOrName(
         @RequestParam(required = false) Optional<ObjectId> id,
@@ -43,6 +44,12 @@ public class PkmnController {
         }
 
         return pkmnService.getByName(name.get());
+    }
+
+      
+    @PostMapping("")
+    public void create(@RequestBody Pkmn pkmn) {
+        pkmnService.create(pkmn);        
     }
 
     @PutMapping("")
@@ -87,11 +94,6 @@ public class PkmnController {
         return pkmnService.getAllPkmnTypes();
     }
 
-    
-    @PostMapping("/create")
-    public void create(@RequestBody Pkmn pkmn) {
-        pkmnService.create(pkmn);        
-    }
 
 
 
