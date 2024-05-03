@@ -30,18 +30,7 @@ public class TrainerService {
         this.repository = trainerRepository;
         this.pkmnRepository = pkmnRepository;
     }
-    
 
-    // public TrainerData getTrainer() {
-    //     String username = getUserName();
-    //     Optional<TrainerData> trainerData = repository.findByUsername(username);
-
-    //     if (!trainerData.isPresent()) {
-    //         throw new TrainerDoesntExistException("Trainer with username " + username + " doesn't exist");
-    //     }
-
-    //     return trainerData.get();
-    // }
 
 
     public TrainerData getTrainerByUsername(String username) {

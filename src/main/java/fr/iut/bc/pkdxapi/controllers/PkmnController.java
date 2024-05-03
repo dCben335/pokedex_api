@@ -9,6 +9,7 @@ import fr.iut.bc.pkdxapi.models.Pkmn.requests.PkmnRegionRequest;
 import fr.iut.bc.pkdxapi.models.Pkmn.requests.PkmnTypesResponse;
 import fr.iut.bc.pkdxapi.services.PkmnService;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -31,9 +32,7 @@ public class PkmnController {
     public PkmnController(PkmnService pkmnService) {
         this.pkmnService = pkmnService;
     }
-    
-    
-  
+
     @GetMapping("")
     public PkmnData getByIdOrName(
         @RequestParam(required = false) Optional<ObjectId> id,
@@ -46,7 +45,7 @@ public class PkmnController {
         return pkmnService.getByName(name.get());
     }
 
-      
+
     @PostMapping("")
     public void create(@RequestBody Pkmn pkmn) {
         pkmnService.create(pkmn);        
@@ -94,6 +93,12 @@ public class PkmnController {
         return pkmnService.getAllPkmnTypes();
     }
 
+
+    @PostMapping("/ids")
+    public List<PkmnData> getMethodName(@RequestBody List<ObjectId> ids) {
+        return pkmnService.getListOfPokemonFromIds(ids);
+    }
+    
 
 
 

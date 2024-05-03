@@ -117,12 +117,12 @@ public class PkmnService {
         if (pkmnExists(pkmn.getName())) {
             throw new PkmnAlreadyExistException("Pokemon with name " + pkmn.getName() + " already exists.");
         }
-
+        
         repository.insert(new PkmnData(
             pkmn.getName(), 
             pkmn.getDescription(), 
             pkmn.getTypes(), 
-            pkmn.getRegions(), 
+            pkmn.getRegions() != null ? pkmn.getRegions() : new ArrayList<>(),
             pkmn.getImgUrl()
         ));
     }
@@ -150,6 +150,7 @@ public class PkmnService {
         }
 
         PkmnData pkmnData = repository.findPkmnByName(pkmnName).get();
+
         List <PkmnRegion> newRegions = new ArrayList<PkmnRegion>(pkmnData.getRegions());
         
         newRegions.add(region);
@@ -204,11 +205,23 @@ public class PkmnService {
     }
     
 
+    public List<PkmnData> getListOfPokemonFromIds(List<ObjectId> ids) {
+        List<PkmnData> pkmns = new ArrayList<>();
+        for (ObjectId id : ids) {
+            Optional<PkmnData> pkmn = repository.findById(id);
+            if (pkmn.isPresent()) {
+                pkmns.add(pkmn.get());
+            }
+        }
+
+        return pkmns;
+    }
+
 
 
     private boolean PknmRegionExists(String pkmnName, PkmnRegion region) {
         PkmnData pkmnData = repository.findPkmnByName(pkmnName).get();
-
+        
         for (PkmnRegion existingRegion : pkmnData.getRegions()) {
             if (existingRegion.getRegionName().equals(region.getRegionName())) {
                 return true;

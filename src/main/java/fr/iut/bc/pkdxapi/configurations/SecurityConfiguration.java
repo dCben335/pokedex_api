@@ -57,14 +57,16 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {    
         http.authorizeHttpRequests((authorizeRequests) -> 
             authorizeRequests
+                .requestMatchers(HttpMethod.POST, "/pkmn/ids").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/pkmn/**", "/pkmn").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/pkmn/**", "/pkmn").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/pkmn/**", "/pkmn").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/pkmn/**", "/pkmn").permitAll() 
 
                 .requestMatchers(HttpMethod.GET,"/trainer/**", "/trainer").permitAll()
                 .requestMatchers("/trainer/**", "/trainer").authenticated()
 
-                .requestMatchers(HttpMethod.PUT, "/users/admin").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/users/admin").permitAll()
                 .requestMatchers("/users/login", "/users/register", "/users/logged").permitAll()
                 .requestMatchers("/users/me").authenticated()
             ) 

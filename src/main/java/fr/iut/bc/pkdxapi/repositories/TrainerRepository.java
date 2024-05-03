@@ -1,6 +1,5 @@
 package fr.iut.bc.pkdxapi.repositories;
 
-import fr.iut.bc.pkdxapi.models.Pkmn.PkmnData;
 import fr.iut.bc.pkdxapi.models.Trainer.TrainerData;
 
 import java.util.Optional;
